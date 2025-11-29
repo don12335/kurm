@@ -1,0 +1,2 @@
+python KURM.py
+pause
